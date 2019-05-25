@@ -1,39 +1,25 @@
-import { Selector, t } from 'testcafe'
+import {Selector, t} from 'testcafe'
 
 class LandingPage {
-  constructor() {
-    this.login_btn = Selector('.sel_login')
-    this.username_input = Selector('#email')
-    this.password_input = Selector('#password')
-    this.submit_btn = Selector('.submit_btn')
-    this.loginIFrame1 = Selector('.GB_frame')
-    this.loginIFrame2 = Selector('#GB_frame')
-    this.errorMsgContainer = Selector('.error_msg')
-  }
+    constructor(){
+        this.loginLin = Selector('.sel_login')
+        this.loginIframe = Selector('.GB_frame')
+        this.loginIframeNested = Selector('#GB_frame')// si fuera nombre ("[name='GB_frame']")
+        this.loginEmailInput= Selector('#email')
+        this.loginPasswordInput = Selector('#password')
+        this.loginButton = Selector('.submit_btn')  
+    }
 
-  loginFlow = async (user = '', pass = '') => {
-    await t
-      .click(this.login_btn)
-      .switchToIframe(this.loginIFrame1)
-      .switchToIframe(this.loginIFrame2)
-      .typeText(this.username_input, user, { replace: true })
-      .typeText(this.password_input, pass, { replace: true })
-      .click(this.submit_btn)
-      .switchToMainWindow()
-  }
-
-  loginFlowEmptyCredentials = async () => {
-    await t
-      .click(this.login_btn)
-      .switchToIframe(this.loginIFrame1)
-      .switchToIframe(this.loginIFrame2)
-      .click(this.submit_btn)
-  }
-
-  getErrorMessage = async () => {
-    await t.hover(this.errorMsgContainer)
-    return this.errorMsgContainer.innerText
-  }
+    loginFlow = async() => {
+        await t
+        .click(this.loginLin)
+        .switchToIframe(this.loginIframe)
+        .switchToIframe(this.loginIframeNested)
+        .typeText(this.loginEmailInput, 'blankius_mizaky@hotmail.com')
+        .typeText(this.loginPasswordInput, 'Vmarcelo1125.')
+        .click(this.loginButton)
+        .switchToMainWindow()
+    }
 }
 
 export default new LandingPage()
